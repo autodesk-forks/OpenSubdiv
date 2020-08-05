@@ -106,7 +106,11 @@ else()
 endif()
 
 # List library files
-foreach(TBB_LIB tbb             tbb_debug)
+foreach(TBB_LIB tbb             tbb_debug
+                tbbmalloc       tbbmalloc_debug
+                tbbmalloc_proxy tbbmalloc_proxy_debug
+                tbb_preview     tbb_preview_debug)
+
 
     find_library(TBB_${TBB_LIB}_LIBRARY
         NAMES
@@ -114,6 +118,7 @@ foreach(TBB_LIB tbb             tbb_debug)
         HINTS
             "${TBB_LOCATION}/lib"
             "${TBB_LOCATION}/bin"
+            "${TBB_LOCATION}/Maya.app/Contents/MacOS"
             "$ENV{TBB_LOCATION}/lib"
             "$ENV{TBB_LOCATION}/bin"
             "$ENV{PROGRAMFILES}/TBB/lib"

@@ -238,8 +238,8 @@ if (NOT NO_LIB)
 
     endif()
 
-    # Build frameworks  ----------------------------------
-    if(APPLE)
+    # Build framework  ----------------------------------
+    if(APPLE AND BUILD_FRAMEWORK)
         get_directory_property(OSD_HEADER_FILES DIRECTORY ${CMAKE_SOURCE_DIR}/opensubdiv/osd DEFINITION PUBLIC_HEADER_FILES)
         get_directory_property(FAR_HEADER_FILES DIRECTORY ${CMAKE_SOURCE_DIR}/opensubdiv/far DEFINITION PUBLIC_HEADER_FILES)
         get_directory_property(SDC_HEADER_FILES DIRECTORY ${CMAKE_SOURCE_DIR}/opensubdiv/sdc DEFINITION PUBLIC_HEADER_FILES)
