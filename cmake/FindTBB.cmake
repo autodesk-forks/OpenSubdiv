@@ -118,7 +118,6 @@ foreach(TBB_LIB tbb             tbb_debug
         HINTS
             "${TBB_LOCATION}/lib"
             "${TBB_LOCATION}/bin"
-            "${TBB_LOCATION}/Maya.app/Contents/MacOS"
             "$ENV{TBB_LOCATION}/lib"
             "$ENV{TBB_LOCATION}/bin"
             "$ENV{PROGRAMFILES}/TBB/lib"
