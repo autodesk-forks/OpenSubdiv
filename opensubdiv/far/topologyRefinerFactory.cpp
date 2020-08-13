@@ -255,7 +255,7 @@ TopologyRefinerFactoryBase::prepareComponentTagsAndSharpness(
 
         eTag._boundary = (baseLevel.getNumEdgeFaces(eIndex) < 2);
         if (eTag._boundary || (eTag._nonManifold && sharpenNonManFeatures)) {
-            eSharpness = Sdc::Crease::SHARPNESS_INFINITE;
+            eSharpness = Sdc::CREASE_SHARPNESS_INFINITE;
         }
         eTag._infSharp  = Sdc::Crease::IsInfinite(eSharpness);
         eTag._semiSharp = Sdc::Crease::IsSharp(eSharpness) && !eTag._infSharp;
@@ -303,7 +303,7 @@ TopologyRefinerFactoryBase::prepareComponentTagsAndSharpness(
         bool isTopologicalCorner = (vFaces.size() == 1) && (vEdges.size() == 2);
         bool isSharpenedCorner =  isTopologicalCorner && sharpenCornerVerts;
         if (isSharpenedCorner) {
-            vSharpness = Sdc::Crease::SHARPNESS_INFINITE;
+            vSharpness = Sdc::CREASE_SHARPNESS_INFINITE;
         } else if (vTag._nonManifold && sharpenNonManFeatures) {
             //
             //  We avoid sharpening non-manifold vertices when they occur on
@@ -314,7 +314,7 @@ TopologyRefinerFactoryBase::prepareComponentTagsAndSharpness(
             //
             if (! ((nonManifoldEdgeCount == 2) && (boundaryEdgeCount == 0) &&
                    (vFaces.size() > vEdges.size()))) {
-                vSharpness = Sdc::Crease::SHARPNESS_INFINITE;
+                vSharpness = Sdc::CREASE_SHARPNESS_INFINITE;
             }
         }
 

@@ -66,11 +66,11 @@ public:
         int GetNumFaces() const { return _nFaces; }
 
         void GetSharpnessPerEdge(float sharpness[]) const {
-            sharpness[0] = Sdc::Crease::SHARPNESS_INFINITE;
+            sharpness[0] = Sdc::CREASE_SHARPNESS_INFINITE;
             for (int i = 1; i < _nEdges - 1; ++i) {
-                sharpness[i] = Sdc::Crease::SHARPNESS_SMOOTH;
+                sharpness[i] = Sdc::CREASE_SHARPNESS_SMOOTH;
             }
-            sharpness[_nEdges - 1] = Sdc::Crease::SHARPNESS_INFINITE;
+            sharpness[_nEdges - 1] = Sdc::CREASE_SHARPNESS_INFINITE;
         }
 
     private:
