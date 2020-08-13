@@ -135,7 +135,7 @@ if (NOT NO_LIB)
 
     set_target_properties(osd_static_cpu
         PROPERTIES
-            OUTPUT_NAME osdCPU
+            OUTPUT_NAME osdCPU_static
             EXPORT_NAME osdCPU_static
             CLEAN_DIRECT_OUTPUT 1
             FOLDER "opensubdiv"
@@ -159,7 +159,7 @@ if (NOT NO_LIB)
         )
         set_target_properties(osd_static_gpu
             PROPERTIES
-                OUTPUT_NAME osdGPU
+                OUTPUT_NAME osdGPU_static
                 EXPORT_NAME osdGPU_static
                 CLEAN_DIRECT_OUTPUT 1)
 
@@ -170,12 +170,14 @@ if (NOT NO_LIB)
         install( TARGETS osd_static_gpu EXPORT opensubdiv-targets DESTINATION "${CMAKE_LIBDIR_BASE}" )
     endif()
 
-
     # Build dynamic libs  ----------------------------------
-    if (BUILD_SHARED_LIBS AND NOT WIN32 AND NOT IOS)
+    if (BUILD_SHARED_LIBS AND NOT IOS)
+        if(WIN32)
+            set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+            add_definitions(/DOPENSUBDIV_AS_DLL)
+        endif()
 
         # generate dynamic-link targets
-
         #---------------------------------------------------
         add_library(osd_dynamic_cpu
             SHARED
@@ -186,6 +188,10 @@ if (NOT NO_LIB)
             $<TARGET_OBJECTS:bfr_obj>
             $<TARGET_OBJECTS:osd_cpu_obj>
         )
+
+        set_target_properties(osd_dynamic_cpu PROPERTIES OUTPUT_NAME osdCPU)
+        set_target_properties(osd_dynamic_cpu PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+        set_target_properties(osd_dynamic_cpu PROPERTIES FOLDER "opensubdiv")
 
         if (NOT ANDROID)
             set_target_properties(osd_dynamic_cpu
@@ -219,7 +225,8 @@ if (NOT NO_LIB)
                 ${OPENGL_LOADER_OBJS}
                 ${CUDA_KERNEL_FILES}
             )
-
+            set_target_properties(osd_dynamic_gpu PROPERTIES OUTPUT_NAME osdGPU)
+            set_target_properties(osd_dynamic_gpu PROPERTIES CLEAN_DIRECT_OUTPUT 1)
             if (NOT ANDROID)
                 set_target_properties(osd_dynamic_gpu
                     PROPERTIES
