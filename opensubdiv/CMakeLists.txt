@@ -215,6 +215,9 @@ if (NOT NO_LIB)
         )
 
         install( TARGETS osd_dynamic_cpu EXPORT opensubdiv-targets LIBRARY DESTINATION "${CMAKE_LIBDIR_BASE}" )
+        if(WIN32)
+            install(FILES $<TARGET_PDB_FILE:osd_dynamic_cpu> DESTINATION "${CMAKE_LIBDIR_BASE}" OPTIONAL)
+        endif()
 
         #---------------------------------------------------
         if( OSD_GPU )
@@ -250,6 +253,9 @@ if (NOT NO_LIB)
             )
 
             install( TARGETS osd_dynamic_gpu EXPORT opensubdiv-targets LIBRARY DESTINATION "${CMAKE_LIBDIR_BASE}" )
+            if(WIN32)
+                install(FILES $<TARGET_PDB_FILE:osd_dynamic_gpu> DESTINATION "${CMAKE_LIBDIR_BASE}" OPTIONAL)
+            endif()
         endif()
 
     endif()
