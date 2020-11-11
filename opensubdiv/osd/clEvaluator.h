@@ -2616,7 +2616,7 @@ public:
 
     static void Synchronize(cl_command_queue queue);
 
-private:
+protected:
     cl_context _clContext;
     cl_command_queue _clCommandQueue;
     cl_program _program;
