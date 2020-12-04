@@ -29,6 +29,13 @@ namespace OPENSUBDIV_VERSION {
 namespace Sdc {
 
 //
+//  Declarations of creasing constants and non-inline methods:
+//
+float const Crease::SHARPNESS_SMOOTH   =  0.0f;
+float const Crease::SHARPNESS_INFINITE = 10.0f;
+
+
+//
 //  Creasing queries dependent on sharpness values:
 //
 Crease::Rule
@@ -105,8 +112,8 @@ Crease::SubdivideEdgeSharpnessAtVertex(float         edgeSharpness,
         return decrementSharpness(edgeSharpness);
     }
 
-    if (IsSmooth(edgeSharpness)) return CREASE_SHARPNESS_SMOOTH;
-    if (IsInfinite(edgeSharpness)) return CREASE_SHARPNESS_INFINITE;
+    if (IsSmooth(edgeSharpness)) return Crease::SHARPNESS_SMOOTH;
+    if (IsInfinite(edgeSharpness)) return Crease::SHARPNESS_INFINITE;
 
     float sharpSum   = 0.0f;
     int   sharpCount = 0;
@@ -124,7 +131,7 @@ Crease::SubdivideEdgeSharpnessAtVertex(float         edgeSharpness,
         edgeSharpness = (0.75f * edgeSharpness) + (0.25f * avgSharpnessAtVertex);
     }
     edgeSharpness -= 1.0f;
-    return IsSharp(edgeSharpness) ? edgeSharpness : CREASE_SHARPNESS_SMOOTH;
+    return IsSharp(edgeSharpness) ? edgeSharpness : Crease::SHARPNESS_SMOOTH;
 }
 
 void
@@ -169,9 +176,9 @@ Crease::SubdivideEdgeSharpnessesAroundVertex(int          edgeCount,
                 float&       cSharp = childSharpness[i];
 
                 if (IsSmooth(pSharp)) {
-                    cSharp = CREASE_SHARPNESS_SMOOTH;
+                    cSharp = Crease::SHARPNESS_SMOOTH;
                 } else if (IsInfinite(pSharp)) {
-                    cSharp = CREASE_SHARPNESS_INFINITE;
+                    cSharp = Crease::SHARPNESS_INFINITE;
                 } else if (sharpCount == 1) {
                     //  Need special case here anyway to avoid divide by zero below...
                     cSharp = decrementSharpness(pSharp);
@@ -180,7 +187,7 @@ Crease::SubdivideEdgeSharpnessesAroundVertex(int          edgeCount,
 
                     //  Chaikin rule is 3/4 original sharpness + 1/4 average of the others
                     cSharp = ((0.75f * pSharp) + (0.25f * pOtherAverage)) - 1.0f;
-                    if (IsSmooth(cSharp)) cSharp = CREASE_SHARPNESS_SMOOTH;
+                    if (IsSmooth(cSharp)) cSharp = Crease::SHARPNESS_SMOOTH;
                 }
             }
         }
