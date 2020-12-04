@@ -59,22 +59,18 @@ namespace Sdc {
 ///  the sharpness values first, so keeping them available for re-use is a worthwhile consideration.
 ///
 
-///  Constants and related queries of sharpness values:
-///
-//@{
-constexpr float CREASE_SHARPNESS_SMOOTH   =  0.0f;    // Do we really need this?
-constexpr float CREASE_SHARPNESS_INFINITE = 10.0f;
-//@}
-
 class Crease {
 public:
-	///  Constants and related queries of sharpness values:
-	///
-	//@{
-	static bool IsSmooth(float sharpness)    { return sharpness <= CREASE_SHARPNESS_SMOOTH; }
-	static bool IsSharp(float sharpness)     { return sharpness > CREASE_SHARPNESS_SMOOTH; }
-	static bool IsInfinite(float sharpness)  { return sharpness >= CREASE_SHARPNESS_INFINITE; }
-	static bool IsSemiSharp(float sharpness) { return (CREASE_SHARPNESS_SMOOTH < sharpness) && (sharpness < CREASE_SHARPNESS_INFINITE); }
+    //@{
+    ///  Constants and related queries of sharpness values:
+    ///
+	static constexpr float SHARPNESS_SMOOTH   =  0.0f;    // Do we really need this?
+	static constexpr float SHARPNESS_INFINITE = 10.0f;
+
+    static bool IsSmooth(float sharpness)    { return sharpness <= SHARPNESS_SMOOTH; }
+    static bool IsSharp(float sharpness)     { return sharpness > SHARPNESS_SMOOTH; }
+    static bool IsInfinite(float sharpness)  { return sharpness >= SHARPNESS_INFINITE; }
+    static bool IsSemiSharp(float sharpness) { return (SHARPNESS_SMOOTH < sharpness) && (sharpness < SHARPNESS_INFINITE); }
     //@}
 
     ///
@@ -197,23 +193,23 @@ Crease::SharpenBoundaryEdge(float /* edgeSharpness */) const {
     //  Much of the code relies on sharpness to indicate boundaries to avoid the more complex
     //  topological inspection
     //
-    return CREASE_SHARPNESS_INFINITE;
+    return SHARPNESS_INFINITE;
 }
 
 inline float
 Crease::SharpenBoundaryVertex(float vertexSharpness) const {
 
     return (_options.GetVtxBoundaryInterpolation() == Options::VTX_BOUNDARY_EDGE_AND_CORNER) ?
-            CREASE_SHARPNESS_INFINITE : vertexSharpness;
+            SHARPNESS_INFINITE : vertexSharpness;
 }
 
 inline float
 Crease::decrementSharpness(float sharpness) const {
 
-    if (IsSmooth(sharpness)) return CREASE_SHARPNESS_SMOOTH;  // redundant but most common
-    if (IsInfinite(sharpness)) return CREASE_SHARPNESS_INFINITE;
+    if (IsSmooth(sharpness)) return Crease::SHARPNESS_SMOOTH;  // redundant but most common
+    if (IsInfinite(sharpness)) return Crease::SHARPNESS_INFINITE;
     if (sharpness > 1.0f) return (sharpness - 1.0f);
-    return CREASE_SHARPNESS_SMOOTH;
+    return Crease::SHARPNESS_SMOOTH;
 }
 
 inline float
