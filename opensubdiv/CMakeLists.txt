@@ -160,6 +160,7 @@ if (NOT NO_LIB)
     if (BUILD_SHARED_LIBS AND NOT IOS)
         if(WIN32)
             set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+            add_definitions(/DOPENSUBDIV_AS_DLL)
         endif()
 
         # generate dynamic-link targets
@@ -237,7 +238,7 @@ if (NOT NO_LIB)
             list(APPEND PUBLIC_HEADER_FILES "vtr/${file}")
         endforeach(file)
 
-        list(APPEND PUBLIC_HEADER_FILES "version.h")
+        list(APPEND PUBLIC_HEADER_FILES "version.h" "exports.h")
 
         #static framework
         add_library(osd_static_framework
