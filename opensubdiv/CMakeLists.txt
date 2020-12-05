@@ -114,7 +114,9 @@ if (NOT NO_LIB)
 
     #---------------------------------------------------------------------------
 
-    install( FILES version.h
+    install( FILES
+            version.h
+            exports.h
         DESTINATION
             "${CMAKE_INCDIR_BASE}"
         PERMISSIONS
@@ -238,7 +240,7 @@ if (NOT NO_LIB)
             list(APPEND PUBLIC_HEADER_FILES "vtr/${file}")
         endforeach(file)
 
-        list(APPEND PUBLIC_HEADER_FILES "version.h" "exports.h")
+        list(APPEND PUBLIC_HEADER_FILES "version.h")
 
         #static framework
         add_library(osd_static_framework
