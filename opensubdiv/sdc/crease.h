@@ -28,6 +28,8 @@
 
 #include "../sdc/options.h"
 
+#include "../exports.h"
+
 namespace OpenSubdiv {
 namespace OPENSUBDIV_VERSION {
 
@@ -64,8 +66,8 @@ public:
     //@{
     ///  Constants and related queries of sharpness values:
     ///
-    static float const SHARPNESS_SMOOTH;    // =  0.0f, do we really need this?
-    static float const SHARPNESS_INFINITE;  // = 10.0f;
+    static OPENSUBDIV_EXPORT float const SHARPNESS_SMOOTH;    // =  0.0f, do we really need this?
+    static OPENSUBDIV_EXPORT float const SHARPNESS_INFINITE;  // = 10.0f;
 
     static bool IsSmooth(float sharpness)    { return sharpness <= SHARPNESS_SMOOTH; }
     static bool IsSharp(float sharpness)     { return sharpness > SHARPNESS_SMOOTH; }
