@@ -69,10 +69,10 @@ public:
     static OPENSUBDIV_EXPORT float const SHARPNESS_SMOOTH;    // =  0.0f, do we really need this?
     static OPENSUBDIV_EXPORT float const SHARPNESS_INFINITE;  // = 10.0f;
 
-    static bool IsSmooth(float sharpness)    { return sharpness <= SHARPNESS_SMOOTH; }
-    static bool IsSharp(float sharpness)     { return sharpness > SHARPNESS_SMOOTH; }
-    static bool IsInfinite(float sharpness)  { return sharpness >= SHARPNESS_INFINITE; }
-    static bool IsSemiSharp(float sharpness) { return (SHARPNESS_SMOOTH < sharpness) && (sharpness < SHARPNESS_INFINITE); }
+    static OPENSUBDIV_EXPORT bool IsSmooth(float sharpness)    { return sharpness <= SHARPNESS_SMOOTH; }
+    static OPENSUBDIV_EXPORT bool IsSharp(float sharpness)     { return sharpness > SHARPNESS_SMOOTH; }
+    static OPENSUBDIV_EXPORT bool IsInfinite(float sharpness)  { return sharpness >= SHARPNESS_INFINITE; }
+    static OPENSUBDIV_EXPORT bool IsSemiSharp(float sharpness) { return (SHARPNESS_SMOOTH < sharpness) && (sharpness < SHARPNESS_INFINITE); }
     //@}
 
     ///
