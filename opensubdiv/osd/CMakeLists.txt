@@ -371,6 +371,8 @@ source_group("Kernels" FILES ${KERNEL_FILES})
 
 source_group("Inc" FILES ${INC_FILES})
 
+osd_add_doxy_headers( "${DOXY_HEADER_FILES}" )
+
 # Compile objs first for both the CPU and GPU libs -----
 add_library(osd_cpu_obj
     OBJECT
@@ -384,6 +386,8 @@ set_target_properties(osd_cpu_obj
         FOLDER "opensubdiv"
 )
 
+add_dependencies(osd_cpu_obj public_headers)
+
 if( GPU_SOURCE_FILES ) 
     add_library(osd_gpu_obj
         OBJECT
@@ -396,9 +400,11 @@ if( GPU_SOURCE_FILES )
         PROPERTIES
             FOLDER "opensubdiv"
     )
+    
+    add_dependencies(osd_gpu_obj public_headers)
+
 endif()
 
-osd_add_doxy_headers( "${DOXY_HEADER_FILES}" )
 
 install(
     FILES
