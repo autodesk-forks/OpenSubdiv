@@ -53,10 +53,17 @@ endif()
 
 #-------------------------------------------------------------------------------
 
-message(STATUS "Compiling ${CMAKE_PROJECT_NAME} version ${OpenSubdiv_VERSION}")
+message(STATUS "Compiling ${PROJECT_NAME} version ${OpenSubdiv_VERSION}")
 message(STATUS "Using cmake version ${CMAKE_VERSION}")
 
 #-------------------------------------------------------------------------------
+# Determine if the project is built as a subproject (using add_subdirectory)
+# or if it is the main project.
+set(MAIN_PROJECT OFF)
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(MAIN_PROJECT ON)
+endif()
+
 # Specify the default install path
 if (NOT DEFINED CMAKE_INSTALL_PREFIX)
     SET( CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/" )
@@ -97,19 +104,21 @@ if(LIBRARY_OUTPUT_PATH_ROOT)
     SET( CMAKE_INSTALL_PREFIX "${LIBRARY_OUTPUT_PATH_ROOT}/" )
 endif()
 
-# Set the directory where the executables will be stored.
-set(EXECUTABLE_OUTPUT_PATH
-    "${PROJECT_BINARY_DIR}/bin"
-    CACHE PATH
-    "Directory where executables will be stored"
-)
+if (MAIN_PROJECT)
+    # Set the directory where the executables will be stored.
+    set(EXECUTABLE_OUTPUT_PATH
+        "${PROJECT_BINARY_DIR}/bin"
+        CACHE PATH
+        "Directory where executables will be stored"
+    )
 
-# Set the directory where the libraries will be stored.
-set(LIBRARY_OUTPUT_PATH
-    "${PROJECT_BINARY_DIR}/lib"
-    CACHE PATH
-    "Directory where all libraries will be stored"
-)
+    # Set the directory where the libraries will be stored.
+    set(LIBRARY_OUTPUT_PATH
+        "${PROJECT_BINARY_DIR}/lib"
+        CACHE PATH
+        "Directory where all libraries will be stored"
+    )
+endif()
 
 # Specify the list of directories to search for cmake modules.
 set(CMAKE_MODULE_PATH
@@ -471,7 +480,8 @@ if(GLEW_FOUND AND GLEW_INCLUDE_DIR)
         ${PROJECT_SOURCE_DIR}/glLoader)
     set(OPENGL_LOADER_LIBRARIES
         ${GLEW_LIBRARY}
-        ${OPENGL_gl_LIBRARY})
+        ${OPENGL_gl_LIBRARY}
+        ${CMAKE_DL_LIBS})
 
 elseif(OPENGL_FOUND)
 
@@ -480,7 +490,8 @@ elseif(OPENGL_FOUND)
         ${OPENGL_INCLUDE_DIR}
         ${PROJECT_SOURCE_DIR}/glLoader)
     set(OPENGL_LOADER_LIBRARIES
-        ${OPENGL_gl_LIBRARY})
+        ${OPENGL_gl_LIBRARY}
+        ${CMAKE_DL_LIBS})
 
 endif()
 
@@ -655,7 +666,7 @@ if (WIN32)
             "environment variable."
         )
     endif()
-    
+
     # Link examples & regressions statically against Osd for
     # Windows until all the kinks can be worked out.
     if( OSD_GPU )
@@ -663,7 +674,7 @@ if (WIN32)
     else()
         set( OSD_LINK_TARGET osd_static_cpu )
     endif()
-    
+
 endif()
 
 
