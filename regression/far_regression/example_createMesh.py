@@ -121,7 +121,7 @@ def readPolyFile(path):
             for line in f.readlines():
                 polys += line.rstrip()
     except:
-        print 'Cannot read '+str(path)
+        print ('Cannot read '+str(path))
 
     polys = eval(polys)
 
